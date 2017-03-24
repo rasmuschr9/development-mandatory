@@ -1,0 +1,18 @@
+﻿@import "typography";
+@import "colors";
+
+.navbar {
+    border:none;
+    border-radius:0;
+    &.navbar-default {
+        background:$base-background-color;
+    }
+    .navbar-nav {
+        li {
+            a:hover {
+                color: #555;
+                background-color: #e7e7e7;
+            }
+        }
+    }
+}

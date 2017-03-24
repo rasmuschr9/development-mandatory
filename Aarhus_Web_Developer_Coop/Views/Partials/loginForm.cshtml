@@ -1,0 +1,56 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+
+@using System.Web.Mvc.Html
+@using ClientDependency.Core.Mvc
+@using Umbraco.Web
+@using Umbraco.Web.Models
+@using Umbraco.Web.Controllers
+
+@{
+    var loginModel = new LoginModel();
+    
+    Html.EnableClientValidation();
+    Html.EnableUnobtrusiveJavaScript();
+    Html.RequiresJs("/umbraco_client/ui/jquery.js");
+    Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.min.js");
+    Html.RequiresJs("/umbraco_client/Application/JQuery/jquery.validate.unobtrusive.min.js");
+}
+
+@* NOTE: This RenderJsHere code should be put on your main template page where the rest of your script tags are placed *@
+@Html.RenderJsHere()
+
+@if (!Members.GetCurrentLoginStatus().IsLoggedIn)
+{
+    using (Html.BeginUmbracoForm<UmbLoginController>("HandleLogin"))
+    {
+        <legend>Login</legend>
+        <div class="col-md-4">
+ 
+                @Html.ValidationSummary("loginModel", true)
+                <div class="form-group">
+                    @Html.LabelFor(m => loginModel.Username)
+                    @Html.TextBoxFor(m => loginModel.Username, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => loginModel.Username)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => loginModel.Password)
+                    @Html.PasswordFor(m => loginModel.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => loginModel.Password)
+                </div>
+                <button type="submit" class="btn btn-default">Login</button>
+      
+        </div>
+    }
+}
+else
+{
+    <p>You are currently logged in as @Members.GetCurrentLoginStatus().Name</p>
+    var logoutModel = new PostRedirectModel();
+    logoutModel.RedirectUrl = "/";
+    using (Html.BeginUmbracoForm<UmbLoginStatusController>("HandleLogout"))
+    {
+        <button class="btn btn-primary input-medium pullleft">Logout</button>
+        @Html.HiddenFor(m => logoutModel.RedirectUrl)
+    }
+}

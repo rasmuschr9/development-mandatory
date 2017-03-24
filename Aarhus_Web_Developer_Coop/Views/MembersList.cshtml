@@ -1,0 +1,67 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.MembersList>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@using Newtonsoft.Json;
+@using Umbraco.Web.Models;
+@{
+    Layout = "Master.cshtml";
+}
+@{
+    var memberService = ApplicationContext.Current.Services.MemberService;
+    var members = memberService.GetMembersByGroup("Active");
+}
+<div class="container">  
+	<div class="row">
+        <div class="col-md-12">
+            <h1>@Umbraco.Field("header")</h1>
+            <p>@Umbraco.Field("bodytext")</p>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var member in members)
+        {
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@member.Name</h3>
+                    </div>
+                    <div class="panel-body">
+                        @if (member.GetValue("photo") != null)
+                        {
+                            string image = member.GetValue<string>("photo");
+                            if (image != null)
+                            {
+                                var imageCrop = JsonConvert.DeserializeObject<ImageCropDataSet>(image);
+                                var imagePath = imageCrop.Src.GetCropUrl(width:900);
+                                <div class="col-md-4">
+                                    <img src="@imagePath " />
+                                </div>
+                            }
+                        }
+                        <div class="col-md-4">
+                            <h4>Contact</h4>
+                            <p>
+                                @member.GetValue("address")<br />
+                                @member.GetValue("zip") @member.GetValue("city")<br />
+                                @member.Email
+                            </p>
+                        </div>
+                        @{
+                            String[] skills = member.GetValue("skills").ToString().Split(',');
+                            string skillString =
+                            string.Join(", ", from skill in skills
+                                              select umbraco.library.GetPreValueAsString(Convert.ToInt32(skill)));
+                            <div class="col-md-4">
+                                <h4>Skills</h4>
+                                <span>@skillString</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+  
+

@@ -1,0 +1,39 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Master>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    
+    <meta charset="UTF-8">
+    <title>@Umbraco.Field("siteTitle", recursive: true)</title>
+    <meta name="description" content="@Umbraco.Field("metaDescription")">
+    <meta name="keywords" content="@Umbraco.Field("metaKeywords")">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="~/css/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <!--NAVBAR-->
+        @Html.Partial("navbar")
+    <!--NAVBAR-END-->
+
+
+	<!--MAIN SECTION-->				
+		@RenderBody()
+	<!--MAINSECTION-END-->	
+    
+    <!--FOOTER-->						
+        @Html.Partial("footer")
+    <!--FOOTER-END-->
+
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

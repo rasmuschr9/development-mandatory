@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+  var home = @CurrentPage.Site();
+}
+<footer>
+    <div class="footer-above">
+
+		@home.GetGridHtml("quicklinks", "bootstrap3")
+		
+    </div>
+    <div class="footer-below">
+        <div class="container">
+            <p>@Umbraco.Field("footer", recursive: true)</p>
+        </div>
+    </div>
+</footer>
+

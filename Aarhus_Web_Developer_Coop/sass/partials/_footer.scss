@@ -1,0 +1,18 @@
+﻿@import "typography";
+@import "colors";
+
+footer {
+    color:$footer-color;
+    .footer-above {
+        background:$base-background-color;
+        padding-top:20px;
+
+    }
+    .footer-below {
+        background:$footer-copyright;
+        padding:10px 0;
+        p {
+            margin-bottom:0;
+        }
+    }
+}
