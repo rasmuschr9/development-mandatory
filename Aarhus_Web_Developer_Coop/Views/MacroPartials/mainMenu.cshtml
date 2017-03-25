@@ -7,7 +7,7 @@
     .First()
     .Children
     .Where("Visible")
-    .Where("projectStatus.Contains(\"9\")")
+    //.Where("projectStatus.Contains(\"9\")")
     .OrderBy("Name");
 }
 <ul class="nav navbar-nav">
@@ -29,9 +29,9 @@
                 <ul class="dropdown-menu">
                     @foreach (var subMenuItem in projectDropdown)
                     {
-                        var isProtected = umbraco.library.IsProtected(menuItem.id, menuItem.path);
-                        var loginAccess = umbraco.library.IsProtected(menuItem.id, menuItem.path)
-                        && umbraco.library.HasAccess(menuItem.id, menuItem.path);
+                        var isProtected = umbraco.library.IsProtected(subMenuItem.id, subMenuItem.path);
+                        var loginAccess = umbraco.library.IsProtected(subMenuItem.id, subMenuItem.path)
+                        && umbraco.library.HasAccess(subMenuItem.id, subMenuItem.path);
                         if (!isProtected || loginAccess)
                         {
                             <li class="@(subMenuItem.IsAncestorOrSelf(CurrentPage) ? "active" : null)">
