@@ -16,32 +16,31 @@
     </li>
     @foreach (var menuItem in root.Children.Where("Visible"))
     {
-        if (menuItem.Name != "Projects") { 
+        if (menuItem.Name != "Projects")
+        {
             <li class="@(menuItem.IsAncestorOrSelf(CurrentPage) ? "active" : null)">
                 <a href="@menuItem.Url">@menuItem.Name</a>
             </li>
         }
         else
         {
-          <li class="dropdown @(menuItem.IsAncestorOrSelf(CurrentPage) ? "active" :null)">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                @foreach (var subMenuItem in projectDropdown)
-                {
-                    var isProtected = umbraco.library.IsProtected(menuItem.id, menuItem.path);
-                    var loginAccess = umbraco.library.IsProtected(menuItem.id, menuItem.path)
-                    && umbraco.library.HasAccess(menuItem.id, menuItem.path);
-                    if (!isProtected || loginAccess)
+            <li class="dropdown @(menuItem.IsAncestorOrSelf(CurrentPage) ? "active" :null)">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    @foreach (var subMenuItem in projectDropdown)
                     {
-                        <li class="@(subMenuItem.IsAncestorOrSelf(CurrentPage) ? "active" : null)">
-                            <a href="@subMenuItem.Url">@subMenuItem.Name</a>
-                        </li>
+                        var isProtected = umbraco.library.IsProtected(menuItem.id, menuItem.path);
+                        var loginAccess = umbraco.library.IsProtected(menuItem.id, menuItem.path)
+                        && umbraco.library.HasAccess(menuItem.id, menuItem.path);
+                        if (!isProtected || loginAccess)
+                        {
+                            <li class="@(subMenuItem.IsAncestorOrSelf(CurrentPage) ? "active" : null)">
+                                <a href="@subMenuItem.Url">@subMenuItem.Name</a>
+                            </li>
+                        }
                     }
-                }
-            </ul>
-          </li>
-              
+                </ul>
+            </li>
         }
-    }  
-    
-</ul> 
+    }
+</ul>

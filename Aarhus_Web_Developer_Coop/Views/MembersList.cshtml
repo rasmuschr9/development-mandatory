@@ -8,6 +8,7 @@
 @{
     var memberService = ApplicationContext.Current.Services.MemberService;
     var members = memberService.GetMembersByGroup("Active");
+    var guestmembers = memberService.GetMembersByGroup("Active");
 }
 <div class="container">  
 	<div class="row">
@@ -17,6 +18,9 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-12">
+            <h2>Active Members</h2>
+        </div>
         @foreach (var member in members)
         {
             <div class="col-md-6">
@@ -59,8 +63,32 @@
                 </div>
             </div>
         }
+        <div class="col-md-12">
+            <h2>Guest Members</h2>
+        </div>
+        @foreach (var member in guestmembers)
+        {
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@member.Name</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            <p>
+                                @member.GetValue("address")<br />
+                                @member.GetValue("zip") @member.GetValue("city")<br />
+                                @member.Email
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
+
+
 
 
   
